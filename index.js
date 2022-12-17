@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
+const dotenv = require("dotenv");
 const passport = require("./src/configs/google-oauth");
 const db = require("./src/configs/db");
 const User = require("./src/models/user.model");
@@ -12,6 +13,8 @@ const courseController = require("./src/routes/course.routes");
 const IAController = require("./src/routes/ia.routes");
 const unitController = require("./src/routes/unit.routes");
 const ppController = require("./src/routes/pair_programming.routes");
+
+dotenv.config();
 
 const app = express();
 
