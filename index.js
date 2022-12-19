@@ -21,6 +21,10 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.get("/trial", () => {
+   return res.send("Server is running")
+})
 app.use(session({
    resave: false,
    saveUninitialized: true,
