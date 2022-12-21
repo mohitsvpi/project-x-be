@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const studentSchema = mongoose.Schema({
-  name : {type: String, required : true},
-  email : {type: String, required : true},
-  studentId : {type: String, required : true},
+  name : {type: String},
+  email : {type: String},
+  studentId : {type: String},
   batch : {type: mongoose.Schema.Types.ObjectId, ref: 'batch'},
   DSA_Course : {type: mongoose.Schema.Types.ObjectId, ref: 'DSA_Course'},
   coding_course : {type: mongoose.Schema.Types.ObjectId, ref : 'coding_course'}, 
