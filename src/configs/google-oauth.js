@@ -9,7 +9,7 @@ passport.use(
       {
          clientID: process.env.GOOGLE_CLIENT_ID,
          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-         callbackURL: "https://beta-project-x.cyclic.app/auth/google/callback",
+         callbackURL: "https://beat-project-x.cyclic.app/auth/google/callback",
          passReqToCallback: true,
       },
       async function (request, accessToken, refreshToken, profile, done) {
