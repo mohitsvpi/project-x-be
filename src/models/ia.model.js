@@ -6,8 +6,8 @@ const iaSchema = new mongoose.Schema(
         email : {type: String, required: true},
         pair_programming : {
             Monday : {
-                start_time : [{type: String}],
-                end_time : [{type: String}]
+                start_time : [{type: String}], 
+                end_time : [{type: String}] 
             },
             Tuesday : {
                 start_time : [{type: String}],

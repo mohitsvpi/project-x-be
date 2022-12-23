@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(session({
    resave: false,
    saveUninitialized: true,
-   secret: 'bla bla bla' 
+   secret: process.env.COOKIE_SECRET_KEY
  }));
 
 passport.serializeUser(function (user, done) {
@@ -45,34 +45,25 @@ app.get(
 app.get(
    "/auth/google/callback",
    passport.authenticate("google", {
-      successRedirect: "http://localhost:3000/",
       failureRedirect: "http://localhost:3000/login",
-   })
+   }),
+   (req, res) => {
+      // user.email is generated inside google-oauth middleware
+      const token = jwt.sign(
+         { email: req.user.email },
+         process.env.JWT_SECRET_KEY,
+         { expiresIn: "7d" }
+      );
+
+      res.cookie("access_token", token);
+      res.redirect("http://localhost:3000/");
+   }
 );
 
-app.get("/auth/google/success", authenticate(), async (req, res) => {
-   try {
-      const data = await User.find();
-      res.send({ users: data });
-   } catch (err) {
-      res.send({ error: true, message: "Error while getting users" });
-   }
-});
 
-app.post("/add", async (req, res) => {
-   try {
-      const entry = User({
-         ...req.body,
-         createdAt: new Date(),
-         updatedAt: new Date(),
-      });
-      await entry.save();
-      res.send({ users: entry });
-   } catch (err) {
-      res.send({ error: true, message: "Error while adding user" });
-   }
+app.get("/", authenticate, (req, res) => {
+   return res.status(200).json({ email: req.user.email });
 });
-
 
 app.use("/users", userController);
 app.use("/batches", batchController);
