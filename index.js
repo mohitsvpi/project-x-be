@@ -13,6 +13,7 @@ const courseController = require("./src/routes/course.routes");
 const IAController = require("./src/routes/ia.routes");
 const unitController = require("./src/routes/unit.routes");
 const ppController = require("./src/routes/pair_programming.routes");
+const jwt = require('jsonwebtoken');
 
 dotenv.config();
 
