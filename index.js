@@ -55,8 +55,8 @@ app.get(
          process.env.JWT_SECRET_KEY,
          { expiresIn: "7d" }
       );
-
       res.cookie("access_token", token);
+      localStorage.setItem("access_token", token);
       res.redirect("http://localhost:3000/");
    }
 );
