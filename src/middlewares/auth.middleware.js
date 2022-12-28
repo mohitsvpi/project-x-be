@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const Admin = require('../models/admin.model');
 
 const authMiddleware = async (req, res, next) => {
     try {
@@ -22,6 +23,23 @@ const authMiddleware = async (req, res, next) => {
     }
 }
 
+
+
+const isAdmin = async (req, res, next) => {
+        const {email} = req.user.user;
+        const adminUser = await Admin.findOne({email});
+        if(adminUser === null) {
+            return res.status(404).send({message : 'You are not allowed to access this'});
+        }
+        else{
+            next();
+        }
+    }
+
+
+
+
 module.exports = {
-    authMiddleware
+    authMiddleware,
+    isAdmin
 }
