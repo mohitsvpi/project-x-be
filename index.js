@@ -14,6 +14,7 @@ const IAController = require("./src/routes/ia.routes");
 const unitController = require("./src/routes/unit.routes");
 const ppController = require("./src/routes/pair_programming.routes");
 const jwt = require('jsonwebtoken');
+const { login, register } = require("./src/controllers/auth.controller");
 
 dotenv.config();
 
@@ -23,44 +24,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-app.use(session({
-   resave: false,
-   saveUninitialized: true,
-   secret: process.env.COOKIE_SECRET_KEY
- }));
-
-passport.serializeUser(function (user, done) {
-   done(null, user);
-});
-
-passport.deserializeUser(function (user, done) {
-   done(null, user);
-});
-
-app.get(
-   "/auth/google",
-   passport.authenticate("google", { scope: ["email", "profile"] })
-);
-
-app.get(
-   "/auth/google/callback",
-   passport.authenticate("google", {
-      failureRedirect: "http://localhost:3000/login",
-   }),
-   (req, res) => {
-      // user.email is generated inside google-oauth middleware
-      const token = jwt.sign(
-         { email: req.user.email },
-         process.env.JWT_SECRET_KEY,
-         { expiresIn: "7d" }
-      );
-      res.cookie("access_token", token);
-      localStorage.setItem("access_token", token);
-      res.redirect("http://localhost:3000/");
-   }
-);
-
+app.post("/auth/login", login)
+app.post("/auth/register", register)
 
 app.get("/", authenticate, (req, res) => {
    return res.status(200).json({ email: req.user.email });
@@ -85,3 +50,42 @@ app.listen(port, async () => {
       console.log("Error while starting server");
    }
 });
+
+
+
+// app.use(session({
+//    resave: false,
+//    saveUninitialized: true,
+//    secret: process.env.COOKIE_SECRET_KEY
+//  }));
+
+// passport.serializeUser(function (user, done) {
+//    done(null, user);
+// });
+
+// passport.deserializeUser(function (user, done) {
+//    done(null, user);
+// });
+
+// app.get(
+//    "/auth/google",
+//    passport.authenticate("google", { scope: ["email", "profile"] })
+// );
+
+// app.get(
+//    "/auth/google/callback",
+//    passport.authenticate("google", {
+//       failureRedirect: "http://localhost:3000/login",
+//    }),
+//    (req, res) => {
+//       // user.email is generated inside google-oauth middleware
+//       const token = jwt.sign(
+//          { email: req.user.email },
+//          process.env.JWT_SECRET_KEY,
+//          { expiresIn: "7d" }
+//       );
+//       res.cookie("access_token", token);
+//       localStorage.setItem("access_token", token);
+//       res.redirect("http://localhost:3000/");
+//    }
+// );
