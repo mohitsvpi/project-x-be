@@ -1,12 +1,13 @@
 const express = require('express');
 const {getAllBatches, getABatch, addBatch, updateBatch, deleteBatch} = require("../controllers/batch.controller");
+const { authMiddleware } = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
-router.get("/", getAllBatches);
-router.get("/:id", getABatch);
-router.post("/", addBatch);
-router.patch("/:id", updateBatch);
-router.delete("/:id", deleteBatch);
+router.get("/", authMiddleware, getAllBatches);
+router.get("/:id", authMiddleware, getABatch);
+router.post("/", authMiddleware, addBatch);
+router.patch("/:id", authMiddleware, updateBatch);
+router.delete("/:id", authMiddleware, deleteBatch);
 
 module.exports = router;

@@ -47,11 +47,11 @@ const login = async (req, res) => {
         if (userType === 'admin') {
             let user = await Admin.findOne({email : req.body.email});
             if (!user){
-                return res.status(404).send({message : 'Invalid username or password'});
+                return res.status(404).send({message : 'Invalid email or password'});
             }
             const password = await user.checkPassword(req.body.password);
             if (!password) {
-                return res.status(404).send('Invalid username or password');
+                return res.status(404).send({message : 'Invalid email or password'});
             }
             const token = newToken({email: req.body.email, id : user._id})
             return res.status(200).send({token});
@@ -59,11 +59,11 @@ const login = async (req, res) => {
         else{
             let user = await User.findOne({email : req.body.email});
             if (!user){
-                return res.status(404).send({message : 'Invalid username or password'});
+                return res.status(404).send({message : 'Invalid email or password'});
             }
             const password = await user.checkPassword(req.body.password);
             if (!password) {
-                return res.status(404).send('Invalid username or password');
+                return res.status(404).send({message : 'Invalid email or password'});
             }
             const token = newToken({email: req.body.email, id : user._id})
             return res.status(200).send({token});
