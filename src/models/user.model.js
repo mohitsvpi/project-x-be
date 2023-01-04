@@ -9,7 +9,10 @@ const studentSchema = mongoose.Schema({
   DSA_Course : {type: mongoose.Schema.Types.ObjectId, ref: 'DSA_Course'},
   coding_course : {type: mongoose.Schema.Types.ObjectId, ref : 'coding_course'}, 
   unit : {type: mongoose.Schema.Types.ObjectId, ref : 'unit'},
-  password : {type: String, required: true}
+  password : {type: String, required: true},
+  dsa_IA : {type: mongoose.Schema.Types.ObjectId, ref : 'IA'},
+  coding_IA : {type: mongoose.Schema.Types.ObjectId, ref : 'IA'},
+  unit_IA : {type: mongoose.Schema.Types.ObjectId, ref : 'IA'} // Part time batches
 },
 {
   versionKey : false,

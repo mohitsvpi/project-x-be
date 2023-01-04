@@ -4,8 +4,8 @@ const Admin = require('../models/admin.model');
 const authMiddleware = async (req, res, next) => {
     try {
         let token;
-        if(req?.headers?.authorization?.startsWith('Bearer ')) {
-            token = req.headers.authorization.split(" ")[1];
+        if(req?.headers?.token?.startsWith('Bearer ')) {
+            token = req.headers.token.split(" ")[1];
             if(token) {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
                 req.user = decoded;
