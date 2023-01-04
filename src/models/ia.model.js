@@ -4,6 +4,7 @@ const iaSchema = new mongoose.Schema(
     {
         name : {type: String},
         email : {type: String, required: true},
+        password : {type: String, required: true},
         pair_programming : {
             Monday : {
                 start_time : [{type: String}], 
